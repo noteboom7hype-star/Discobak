@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Discobak</title>
+  <style>
+    body {
+      background-color: orange;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    h1 {
+      color: white;
+      font-size: 50px;
+    }
+    .buttons {
+      margin-top: 30px;
+    }
+    button {
+      padding: 15px 25px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .btn1 {
+      background-color: #333;
+      color: white;
+    }
+    .btn2 {
+      background-color: #555;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Discobak</h1>
+  <div class="buttons">
+    <button class="btn1" onclick="irParaDiscobak()">Ir para Discobak</button>
+    <button class="btn2" onclick="discobakPanel()">Discobak Panel</button>
+  </div>
+
+  <script>
+    function irParaDiscobak() {
+      alert("Indo para Discobak...");
+      // Aqui você pode colocar um link real, por exemplo:
+      // window.location.href = "https://seu-link-discobak.com";
+    }
+
+    function discobakPanel() {
+      let nome = prompt("Digite o nome:");
+      let senha = prompt("Digite a senha:");
+
+      if (nome === "admin" && senha === "bisteca123") {
+        alert("Erro 133. Em construção");
+      } else {
+        alert("Credenciais inválidas!");
+      }
+    }
+  </script>
+</body>
+</html>
