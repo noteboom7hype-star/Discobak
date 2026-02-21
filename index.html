@@ -5,33 +5,90 @@
   <title>Discobak</title>
   <style>
     body {
-      background-color: orange;
-      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff8800, #ff5500);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      margin-top: 100px;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
     }
     h1 {
-      color: white;
-      font-size: 50px;
+      font-size: 60px;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     }
     .buttons {
-      margin-top: 30px;
+      display: flex;
+      gap: 20px;
     }
     button {
-      padding: 15px 25px;
-      margin: 10px;
-      font-size: 16px;
+      padding: 15px 30px;
+      font-size: 18px;
       cursor: pointer;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
     }
     .btn1 {
-      background-color: #333;
+      background-color: #222;
       color: white;
     }
     .btn2 {
-      background-color: #555;
+      background-color: #444;
       color: white;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      color: #333;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      text-align: left;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .modal-content button {
+      width: 100%;
+      padding: 12px;
+      background-color: #ff5500;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .modal-content button:hover {
+      background-color: #ff3300;
     }
   </style>
 </head>
@@ -39,24 +96,46 @@
   <h1>Discobak</h1>
   <div class="buttons">
     <button class="btn1" onclick="irParaDiscobak()">Ir para Discobak</button>
-    <button class="btn2" onclick="discobakPanel()">Discobak Panel</button>
+    <button class="btn2" onclick="abrirModal()">Discobak Panel</button>
+  </div>
+
+  <!-- Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <h2>Login</h2>
+      <input type="text" id="nome" placeholder="Nome">
+      <input type="password" id="senha" placeholder="Senha">
+      <button onclick="validarLogin()">Entrar</button>
+    </div>
   </div>
 
   <script>
     function irParaDiscobak() {
       alert("Indo para Discobak...");
-      // Aqui você pode colocar um link real, por exemplo:
       // window.location.href = "https://seu-link-discobak.com";
     }
 
-    function discobakPanel() {
-      let nome = prompt("Digite o nome:");
-      let senha = prompt("Digite a senha:");
+    function abrirModal() {
+      document.getElementById("loginModal").style.display = "flex";
+    }
+
+    function validarLogin() {
+      let nome = document.getElementById("nome").value;
+      let senha = document.getElementById("senha").value;
 
       if (nome === "admin" && senha === "bisteca123") {
         alert("Erro 133. Em construção");
+        document.getElementById("loginModal").style.display = "none";
       } else {
         alert("Credenciais inválidas!");
+      }
+    }
+
+    // Fechar modal clicando fora
+    window.onclick = function(event) {
+      let modal = document.getElementById("loginModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
       }
     }
   </script>
