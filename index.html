@@ -4,27 +4,38 @@
   <meta charset="UTF-8">
   <title>Discobak</title>
   <style>
+    /* Fundo com efeito de chuva */
     body {
-      background: linear-gradient(135deg, #ff8800, #ff5500);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      text-align: center;
       margin: 0;
       height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       color: white;
+      position: relative;
     }
+
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
     h1 {
       font-size: 60px;
       margin-bottom: 40px;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
     }
+
     .buttons {
       display: flex;
       gap: 20px;
     }
+
     button {
       padding: 15px 30px;
       font-size: 18px;
@@ -45,7 +56,7 @@
       color: white;
     }
 
-    /* Modal */
+    /* Modal glassy */
     .modal {
       display: none;
       position: fixed;
@@ -57,25 +68,31 @@
       align-items: center;
     }
     .modal-content {
-      background: #fff;
-      color: #333;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      color: #fff;
       padding: 30px;
-      border-radius: 10px;
+      border-radius: 15px;
       width: 300px;
-      text-align: left;
+      text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
     .modal-content h2 {
       margin-top: 0;
       margin-bottom: 20px;
-      text-align: center;
     }
     .modal-content input {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       border-radius: 5px;
-      border: 1px solid #ccc;
+      border: none;
+      outline: none;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .modal-content input::placeholder {
+      color: #ddd;
     }
     .modal-content button {
       width: 100%;
@@ -90,9 +107,16 @@
     .modal-content button:hover {
       background-color: #ff3300;
     }
+
+    .mensagem {
+      margin-top: 15px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
+  <canvas id="chuva"></canvas>
+
   <h1>Discobak</h1>
   <div class="buttons">
     <button class="btn1" onclick="irParaDiscobak()">Ir para Discobak</button>
@@ -106,28 +130,29 @@
       <input type="text" id="nome" placeholder="Nome">
       <input type="password" id="senha" placeholder="Senha">
       <button onclick="validarLogin()">Entrar</button>
+      <div id="mensagem" class="mensagem"></div>
     </div>
   </div>
 
   <script>
     function irParaDiscobak() {
-      alert("Indo para Discobak...");
-      // window.location.href = "https://seu-link-discobak.com";
+      document.getElementById("mensagem").innerText = "Indo para Discobak...";
     }
 
     function abrirModal() {
       document.getElementById("loginModal").style.display = "flex";
+      document.getElementById("mensagem").innerText = "";
     }
 
     function validarLogin() {
       let nome = document.getElementById("nome").value;
       let senha = document.getElementById("senha").value;
+      let msg = document.getElementById("mensagem");
 
       if (nome === "admin" && senha === "bisteca123") {
-        alert("Erro 133. Em construção");
-        document.getElementById("loginModal").style.display = "none";
+        msg.innerText = "Erro 133. Em construção";
       } else {
-        alert("Credenciais inválidas!");
+        msg.innerText = "Credenciais inválidas!";
       }
     }
 
@@ -138,6 +163,42 @@
         modal.style.display = "none";
       }
     }
+
+    // Efeito de chuva
+    const canvas = document.getElementById("chuva");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let gotas = [];
+    for (let i = 0; i < 150; i++) {
+      gotas.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        comprimento: Math.random() * 20 + 10,
+        velocidade: Math.random() * 4 + 4
+      });
+    }
+
+    function desenharChuva() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = "rgba(255,255,255,0.5)";
+      ctx.lineWidth = 2;
+      for (let i = 0; i < gotas.length; i++) {
+        let g = gotas[i];
+        ctx.beginPath();
+        ctx.moveTo(g.x, g.y);
+        ctx.lineTo(g.x, g.y + g.comprimento);
+        ctx.stroke();
+        g.y += g.velocidade;
+        if (g.y > canvas.height) {
+          g.y = -20;
+          g.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(desenharChuva);
+    }
+    desenharChuva();
   </script>
 </body>
 </html>
