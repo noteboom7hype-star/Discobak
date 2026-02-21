@@ -4,25 +4,16 @@
   <meta charset="UTF-8">
   <title>Discobak</title>
   <style>
-    /* Fundo com efeito de chuva */
     body {
       margin: 0;
       height: 100vh;
-      overflow: hidden;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       color: white;
-      position: relative;
-    }
-
-    canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
+      background: linear-gradient(135deg, #ff8800, #ff5500);
     }
 
     h1 {
@@ -43,24 +34,19 @@
       border: none;
       border-radius: 8px;
       transition: transform 0.2s, background-color 0.3s;
+      background-color: #ff6600;
+      color: white;
     }
     button:hover {
       transform: scale(1.05);
-    }
-    .btn1 {
-      background-color: #222;
-      color: white;
-    }
-    .btn2 {
-      background-color: #444;
-      color: white;
+      background-color: #ff3300;
     }
 
     /* Modal glassy */
     .modal {
       display: none;
       position: fixed;
-      z-index: 1;
+      z-index: 2;
       left: 0; top: 0;
       width: 100%; height: 100%;
       background-color: rgba(0,0,0,0.6);
@@ -97,7 +83,7 @@
     .modal-content button {
       width: 100%;
       padding: 12px;
-      background-color: #ff5500;
+      background-color: #ff6600;
       color: white;
       border: none;
       border-radius: 6px;
@@ -115,12 +101,10 @@
   </style>
 </head>
 <body>
-  <canvas id="chuva"></canvas>
-
   <h1>Discobak</h1>
   <div class="buttons">
-    <button class="btn1" onclick="irParaDiscobak()">Ir para Discobak</button>
-    <button class="btn2" onclick="abrirModal()">Discobak Panel</button>
+    <button onclick="irParaDiscobak()">Ir para Discobak</button>
+    <button onclick="abrirModal()">Discobak Panel</button>
   </div>
 
   <!-- Modal -->
@@ -163,42 +147,6 @@
         modal.style.display = "none";
       }
     }
-
-    // Efeito de chuva
-    const canvas = document.getElementById("chuva");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let gotas = [];
-    for (let i = 0; i < 150; i++) {
-      gotas.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        comprimento: Math.random() * 20 + 10,
-        velocidade: Math.random() * 4 + 4
-      });
-    }
-
-    function desenharChuva() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "rgba(255,255,255,0.5)";
-      ctx.lineWidth = 2;
-      for (let i = 0; i < gotas.length; i++) {
-        let g = gotas[i];
-        ctx.beginPath();
-        ctx.moveTo(g.x, g.y);
-        ctx.lineTo(g.x, g.y + g.comprimento);
-        ctx.stroke();
-        g.y += g.velocidade;
-        if (g.y > canvas.height) {
-          g.y = -20;
-          g.x = Math.random() * canvas.width;
-        }
-      }
-      requestAnimationFrame(desenharChuva);
-    }
-    desenharChuva();
   </script>
 </body>
 </html>
